@@ -11,7 +11,7 @@ export const Header=()=>{
             <a href="#speciality" className="ba">Book Appointment <img src={assets.arrow_icon} alt="book appointment button" /></a>
         </div>
         <div className="rightSide">
-            <img src={assets.doctor} alt="doctor image" />
+            <img src={assets.nc} alt="doctor image" />
         </div>
     </div>
 

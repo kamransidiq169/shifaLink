@@ -2,7 +2,9 @@ import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { AppContext } from "../context/AppContext"
 import { RelatedDoctors } from "../components/RelatedDoctors"
-
+import {useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
+import axios from "axios"
 export const Appointment = () => {
 
     const [docInfo, setdocInfo] = useState(null)
@@ -11,7 +13,7 @@ export const Appointment = () => {
     const [slotTime, setslotTime] = useState('')
 
     const { docId } = useParams()
-    const { doctors, currency } = useContext(AppContext)
+    const { doctors, currency,token,backendUrl,getDoctorsData } = useContext(AppContext)
     const daysofWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 
     const findDoctorbyId = async () => {
@@ -69,6 +71,41 @@ export const Appointment = () => {
         console.log(docSlots);
 
     }, [docSlots])
+
+
+      const navigate = useNavigate()
+
+
+    const bookAppointment =async ()=>{
+      if(!token){
+      toast.warn("Login to book appointment")
+        navigate("/login")
+      }
+
+      try {
+        const date = docSlots[slotIndex][0].datetime
+
+        let day = date.getDate()
+        let month = date.getMonth()+1
+        let year = date.getFullYear()
+
+        const slotDate = day + "_" + month + "_" + year
+        
+        const {data} = await axios.post(backendUrl + 'api/user/book-appointment' , {docId,slotDate,slotTime},{headers:{token}})
+
+        if(data.success){
+            toast.success(data.message)
+            getDoctorsData()
+            // navigate("/my-appointments")
+        }else{
+            toast.error(data.message)
+        }
+        
+      } catch (error) {
+        console.log(error.message);
+        
+      }
+    }
     return (
         <>
             {docInfo ? (<>
@@ -108,7 +145,7 @@ export const Appointment = () => {
                                 </p>
                             ))}
                         </div>
-                        <button className="book">Book an appointment</button>
+                        <button className="book" onClick={bookAppointment}>Book an appointment</button>
                     </div>
 
                     {/* relationComponent */}

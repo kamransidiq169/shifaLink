@@ -1,46 +1,57 @@
 import { useContext, useState } from "react";
 import { AdminContext } from "../context/AdminContext";
 import axios from 'axios'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
+import { DoctorContext } from "../context/DoctorContext";
 export const Login = () => {
   const [state, setState] = useState("Admin");
-  const [email,setEmail]=useState('')
-  const [password,setPassword]=useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const {setaToken,backendUrl}=useContext(AdminContext)
+  const { setaToken, backendUrl } = useContext(AdminContext)
+  const { setDToken, backendurl } = useContext(DoctorContext)
 
 
-  const onSubmitHandler=async(e)=>{
-     e.preventDefault()
-  
-     try {
-       if(state==='Admin'){
-         const {data}= await axios.post(`${backendUrl}/api/admin/login`, { email, password });
-        
-         if(data.success){
+  const onSubmitHandler = async (e) => {
+    e.preventDefault()
+
+    try {
+      if (state === 'Admin') {
+        const { data } = await axios.post(`${backendurl}api/admin/login`, { email, password });
+
+        if (data.success) {
           console.log(data.token);
-          
-          localStorage.setItem('aToken',data.token)
+
+          localStorage.setItem('aToken', data.token)
           setaToken(data.token)
-         }else{
+        } else {
           toast.error(data.message)
-         }
+        }
 
-       }else{
+      } else {
+        const { data } = await axios.post(`${backendUrl}api/doctor/login`, { email, password });
 
+        if (data.success) {
+          console.log(data.token);
 
-       }
+          localStorage.setItem('dToken', data.token)
+          setDToken(data.token)
+        } else {
+          toast.error(data.message)
+        }
 
-     } catch (error) {
+      }
+
+    } catch (error) {
       console.log(error);
-      
-     }
+
+    }
 
   }
 
   return (
- 
-      <div className="login-wrapper">
+
+    <div className="login-wrapper">
       <div className="login-card">
         <h2 className="login-header">
           {state} <span>Login</span>
@@ -49,12 +60,12 @@ export const Login = () => {
         <form className="login-form" onSubmit={onSubmitHandler}>
           <div className="input-group">
             <label>Email</label>
-            <input type="email" placeholder="Enter your email" onChange={(e)=>setEmail(e.target.value)} value={email} required />
+            <input type="email" placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)} value={email} required />
           </div>
 
           <div className="input-group">
             <label>Password</label>
-            <input type="password" placeholder="Enter your password" required onChange={(e)=>setPassword(e.target.value)} value={password} />
+            <input type="password" placeholder="Enter your password" required onChange={(e) => setPassword(e.target.value)} value={password} />
           </div>
 
           <button type="submit">Login</button>
@@ -75,6 +86,6 @@ export const Login = () => {
         </p>
       </div>
     </div>
-    
+
   );
 };

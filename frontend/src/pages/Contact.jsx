@@ -13,7 +13,7 @@ export const Contact = () => {
                     <p style={{color:"gray"}}>Lalbazar Srinagar <br /> Jammu & Kashmir India</p>
                     <p style={{color:"gray"}}>tel:7006040427 <br /> Email:kamransidiq169@gmail.com</p>
                     <h4>Careers at ShifaLink</h4>
-                    <p style={{color:"gray"}}>Learn more about teams and job openings</p>
+                    <p style={{color:"gray"}}>Learn more about teams and job openings </p>
                     <button className="explore">Explore Jobs</button>
                 </div>
             </div>

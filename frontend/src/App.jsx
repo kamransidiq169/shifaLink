@@ -8,11 +8,18 @@ import { MyProfile } from "./pages/MyProfile";
 import { MyAppointment } from "./pages/MyAppointment";
 import { Appointment } from "./pages/Appointment";
 import { Navbar } from "./components/Navbar";
+ import { ToastContainer, toast } from 'react-toastify';
+ import 'react-toastify/dist/ReactToastify.css'
 import "./App.css"
 import { Footer } from "./components/Footer";
+import DoctorsByPharmacy from "./pages/doctorsByPharmacy";
+
+
+
 const App=()=>{
   return (<div className="homeContainer">
   <Navbar/>
+  <ToastContainer/>
   <Routes>
     <Route path="/" element={<Home/>}/>
     <Route path="/about" element={<About/>}/>
@@ -23,6 +30,7 @@ const App=()=>{
     <Route path="/my-profile" element={<MyProfile/>}/>
     <Route path="/my-appointments" element={<MyAppointment/>}/>
     <Route path="/appointment/:docId" element={<Appointment/>}/>
+    <Route path="/pharmacies/:pharmacyId" element={<DoctorsByPharmacy/>}/>
   </Routes>
   <Footer/>
   

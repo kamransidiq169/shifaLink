@@ -116,7 +116,10 @@ body{
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-color: #6da9fd;
+  /* background-color: #6da9fd; */
+  background-image: url(assets/assets_frontend/bac.jpg);
+  background-position: center;
+  background-size: cover;
   border-radius: 15px;
 }
 
@@ -168,8 +171,8 @@ body{
 }
 .rightSide img{
   margin-top: 10px;
- width: 300px;
- height: auto;
+ width: 610px;
+ height: 460px;
  /* margin-bottom: 70px; */
 } 
 
@@ -214,11 +217,134 @@ gap: 22px;
 .specialityText:hover {
   color:#6da9fd;
 }
+.speciality-slider {
+  margin-left: 320px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 60%;
+}
+
+.speciality-track {
+  display: inline-flex;
+  gap: 56px;
+  animation: specialityScroll 20s linear infinite;
+}
+
+.alldoctors {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+@keyframes specialityScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+/* pharmacies */
+
+.pharmacies-section {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 3rem 1.5rem 4rem;
+  text-align: center;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.1rem;
+  font-weight: 500;
+  color: #6da9fd;
+  margin-bottom: 0.25rem;
+}
+
+.section-subtitle {
+  font-size: 1.3rem;
+  color: rgb(42, 42, 42);
+  margin-bottom: 2rem;
+}
+
+.pharmacies-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.pharmacy-card {
+  background: #ffffff;
+  border-radius: 1.2rem;
+  padding: 1.4rem 1.3rem;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.pharmacy-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.15rem;
+}
+
+.pharmacy-location {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: #4f46e5;
+  text-decoration: none;
+  margin-bottom: 0.8rem;
+}
+
+.pharmacy-location:hover {
+  text-decoration: underline;
+}
+
+.pharmacy-field {
+  margin-bottom: 0.5rem;
+}
+
+.pharmacy-field .label {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+  margin-bottom: 0.1rem;
+}
+
+.pharmacy-field .value {
+  font-size: 0.85rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .pharmacies-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .pharmacies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    text-align: center;
+  }
+
+  .section-subtitle {
+    text-align: center;
+  }
+}
 
 /*! Top doctors.jsx starts here */
 
 .doctorContainer{
-  margin-top: 100px;
+  margin-top: 30px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -275,6 +401,12 @@ gap: 22px;
   background-color: rgb(160, 247, 160);
 
 }
+.notdot{
+   width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: red;
+}
 .aval{
   color: rgb(130, 204, 130);
 }
@@ -305,6 +437,9 @@ gap: 22px;
     transform: translateY(-8px);
 }
 
+.notaval{
+  color: red;
+}
 /*! bannner.jsx starts here */
 
 .bannerContainer{
@@ -796,4 +931,165 @@ background-color: white;
   color: white;
   transition: all 0.4s ease-in-out;
   cursor: pointer;
+}
+.cancelappointment{
+  padding: 8px 35px;
+  border: 1px solid rgb(173, 170, 170);
+  outline: none;
+  border-radius: 9px;
+  background-color: white;
+  color: black;
+  font-size: 17px;
+   background-color: redß;
+  color: white;
+}
+/* profilepage.css */
+
+
+.body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  background: #f7f7fc;
+}
+
+.profile-root {
+  min-height: 100vh;
+  width: 100vw;
+  background: #f7f7fc;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.profile-main {
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(44,58,88,0.10);
+  border-radius: 22px;
+  padding: 48px 38px 40px 38px;
+  margin-top: 44px;
+  width: 90vw;
+  max-width: 620px;
+}
+
+.profile-photo-row {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+.profile-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: #e8e8ee;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 10px rgba(60,72,88,0.15);
+}
+
+.profile-username {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #232345;
+  letter-spacing: 1.5px;
+  margin-bottom: 2px;
+}
+
+.profile-divider {
+  border: none;
+  border-top: 1px solid #e3e6ee;
+  margin: 26px 0 22px 0;
+}
+
+.profile-section {
+  margin-bottom: 22px;
+}
+
+.profile-title {
+  text-transform: uppercase;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #6c6c90;
+  margin-bottom: 15px;
+  letter-spacing: 1.2px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  row-gap: 18px;
+  column-gap: 24px;
+  align-items: center;
+}
+
+.profile-grid label {
+  color: #727294;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.profile-input {
+  font-size: 1rem;
+  padding: 9px 12px;
+  border-radius: 7px;
+  border: 1px solid #d6dbe5;
+  background: #fafafd;
+  color: #232345;
+  transition: border-color 0.18s;
+  margin-bottom: 5px;
+}
+
+.profile-input:focus {
+  outline: none;
+  border-color: #6c63ff;
+}
+
+.profile-btn-row {
+  display: flex;
+  justify-content: end;
+  margin-top: 30px;
+}
+
+.profile-btn {
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+  padding: 13px 45px;
+  border-radius: 26px;
+  font-size: 1.14rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 3px 14px rgba(90,89,255,0.035);
+  transition: background 0.16s, box-shadow 0.16s;
+}
+
+.profile-btn:hover {
+  background: #514bce;
+  box-shadow: 0 5px 22px rgba(76,77,179,0.08);
+}
+
+@media (max-width: 700px) {
+  .profile-main {
+    padding: 18px 3vw;
+    max-width: 99vw;
+  }
+  .profile-photo-row {
+    flex-direction: column;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .profile-avatar {
+    width: 78px;
+    height: 78px;
+    border-radius: 22px;
+  }
+  .profile-username {
+    font-size: 1.2rem;
+  }
+  .profile-grid {
+    grid-template-columns: 1fr;
+    row-gap: 12px;
+    column-gap: 0;
+  }
 }

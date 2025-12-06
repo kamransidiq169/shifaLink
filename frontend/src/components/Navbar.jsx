@@ -1,9 +1,17 @@
-import { useState } from "react"
+
 import { NavLink, useNavigate } from "react-router-dom"
 import { assets } from "../assets/assets_frontend/assets.js"
+import { AppContext } from "../context/AppContext.jsx"
+import { useContext } from "react"
 export const Navbar = () => {
     const navigate = useNavigate()
-    const [token, setToken] = useState(true)
+
+    const {token, setToken,userData} = useContext(AppContext)
+
+    const logout =()=>{
+        localStorage.removeItem('token')
+        setToken(false)
+    }
     return (<>
         <div className="navbarContainer">
             <div className="shifaImage" onClick={()=>navigate("/")}>
@@ -26,13 +34,13 @@ export const Navbar = () => {
                 </NavLink>
             </ul>
             <div className="tokenImages">{token ? <div className="parent" >
-                <img src={assets.profile_pic} alt="profilePic" className="profileImage" />
+                <img src={userData.image} alt="profilePic" className="profileImage" />
                 <img src={assets.dropdown_icon} alt="dropdown Icon" className="dropdownImage" />
                 <div> 
                     <div className="pal">
                         <p className="palInputs" onClick={()=>navigate("/my-profile")}>My Profile</p>
                         <p className="palInputs" onClick={()=>navigate("/my-appointments")}>My Appointments</p>
-                        <p className="palInputs" onClick={()=>setToken(false)}>Logout</p>
+                        <p className="palInputs" onClick={logout}>Logout</p>
                     </div>
                 </div>
                 </div>

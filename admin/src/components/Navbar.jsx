@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import { AdminContext } from "../context/AdminContext";
 import { useNavigate } from "react-router-dom";
+import { DoctorContext } from "../context/DoctorContext";
 
 
 export const Navbar = () => {
   const { aToken, setaToken } = useContext(AdminContext);
+  const {setDToken} = useContext(DoctorContext)
   const navigate = useNavigate();
 
   const Logout = () => {
@@ -12,6 +14,9 @@ export const Navbar = () => {
     if (aToken) {
       setaToken("");
       localStorage.removeItem("aToken");
+    }else{
+      setDToken("")
+       localStorage.removeItem("dToken");
     }
   };
 

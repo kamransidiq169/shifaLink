@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { AdminContext } from "../../context/AdminContext";
@@ -42,16 +42,27 @@ export const AddDoctors = () => {
       formData.append('fees',Number(fees))
       formData.append('about',about)
 
-      formData.forEach((key, value) => {
-        console.log(`${value}:${key}`);
+      // formData.forEach((key, value) => {
+      //   console.log(`${value}:${key}`);
 
-      })
+      // })
 
-       const {data}= await axios.post(backendUrl + 'api/admin/add-doctor',formData,{headers:{aToken}})
+       const {data} = await axios.post(backendUrl + 'api/admin/add-doctor',formData,{headers:{aToken}})
 
       console.log(data);
       if (data.success) {
         toast.success(data.message)
+        setdocImg(false)
+        setName('')
+        setPassword('')
+        setEmail('')
+        setAbout('')
+        setAddress1('')
+        setAddress2('')
+        setDegree('')
+        setExperience('')
+        setFees('')
+        setSpeciality('')
       } else {
         toast.error(data.message)
       }
@@ -106,6 +117,10 @@ export const AddDoctors = () => {
                 <option value="Cardiologist">Cardiologist</option>
                 <option value="Dermatologist">Dermatologist</option>
                 <option value="Pediatrician">Pediatrician</option>
+                <option value="Gynacologist">Gynacologist</option>
+                <option value="Neurologist">Neurologist</option>
+                <option value="Gastroenterologist">Gastroenterologist</option>
+                <option value="Pediatricians">Pediatricians</option>
               </select>
             </div>
 

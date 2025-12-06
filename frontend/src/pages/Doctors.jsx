@@ -31,13 +31,13 @@ export const Doctors = () => {
             <p onClick={()=>speciality==="Gastroenterologist" ? navigate("/doctors") : navigate("/doctors/Gastroenterologist")} className={speciality==='Gastroenterologist'?'blue':'none'}>Gastroenterologist</p>
         </div>
         <div className="rightDoctors">
-            {filterDoc.map((doc,index)=>(
-                    <div key={index} className="allDoctors" onClick={()=>navigate(`/appointment/${doc._id}`)}>
+            {filterDoc.map((doc)=>(
+                    <div key={doc._id} className="allDoctors" onClick={()=>navigate(`/appointment/${doc._id}`)}>
                         <img src={doc.image} alt="doctor image" />
                         <div className="doctorANS">
                                <div className="docInfo">
-                             <p className="dot"></p>
-                             <p className="aval">Available</p>
+                             <p className={doc.avaliable ? "dot":"notdot"}></p>
+                             <p className={doc.avaliable ? "aval":"notaval"}>{doc.avaliable ? "Available" : "Not Available"}</p>
                         </div>
                        <div className="ns">
                          <h3>{doc.name}</h3>

@@ -40,9 +40,17 @@ import General_physician from './General_physician.svg'
 import Gynecologist from './Gynecologist.svg'
 import Neurologist from './Neurologist.svg'
 import Pediatricians from './Pediatricians.svg'
-
-
+import kd from './kd.png'
+import fdd from './fdd.png'
+import dc from './dc.png'
+import nc from './nc.png'
+import bac from './bac.jpg'
 export const assets = {
+    bac,
+    nc,
+    dc,
+    fdd,
+    kd,
     rc,
     techDoc,
     doctor3,
@@ -155,7 +163,7 @@ export const doctors = [
         _id: 'doc5',
         name: 'Dr. Azka',
         image: doc5,
-        speciality: 'Neurologist',
+        speciality: 'Dermatologist',
         degree: 'MBBS',
         experience: '4 Years',
         about: 'Dr. Azka has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
