@@ -13,6 +13,8 @@ import { Navbar } from "./components/Navbar";
 import "./App.css"
 import { Footer } from "./components/Footer";
 import DoctorsByPharmacy from "./pages/doctorsByPharmacy";
+import PharmacyAppointments from "./pages/pharmacyAppointment";
+import TopPharmacies from "./components/TopPharmacies";
 
 
 
@@ -30,7 +32,9 @@ const App=()=>{
     <Route path="/my-profile" element={<MyProfile/>}/>
     <Route path="/my-appointments" element={<MyAppointment/>}/>
     <Route path="/appointment/:docId" element={<Appointment/>}/>
+    <Route path="/pharmacies" element={<TopPharmacies/>}/>
     <Route path="/pharmacies/:pharmacyId" element={<DoctorsByPharmacy/>}/>
+    <Route path="/pharmacyappointment/:docId" element={<PharmacyAppointments/>}/>
   </Routes>
   <Footer/>
   

@@ -7,14 +7,14 @@ import appointmentModel from '../models/appointmentModel.js'
 import userModel from '../models/userModel.js'
 const AddDoctor = async (req, res) => {
     try {
-        const { name, email, password, speciality, fees, about, address, degree, experience } = req.body
+        const { name, email, password, speciality, fees, about, address, degree, experience, pharmacy } = req.body
         const imageFile = req.file
 
         // console.log({name,email,password,fees,about,address,degree,experience},imageFile);
 
         // checking all details
 
-        if (!name || !email || !password || !speciality || !fees || !about || !address || !degree || !experience) {
+        if (!name || !email || !password || !speciality || !fees || !about || !address || !degree || !experience || !pharmacy || !imageFile) {
             return res.json({ success: false, message: "Missing details" })
         }
 
@@ -43,16 +43,17 @@ const AddDoctor = async (req, res) => {
 
     const doctorData ={
         name,
+        pharmacy,
         email,
         image:imageUrl,
         speciality,
-        address,
         fees,
         degree,
         password:hashedPassword,
         about,
         experience,
         address:JSON.parse(address),
+        availability: JSON.parse(req.body.availability || '[]'),
         date:Date.now()
     }    
 

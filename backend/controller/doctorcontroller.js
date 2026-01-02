@@ -47,46 +47,99 @@ const doctorLogin = async(req,res) =>{
     res.json({success:false,message:error.message})
    }
 }
-const getAppointments = async (req,res) =>{
-   try {
-      const {docId} = req.body
-      const appointments = await appointmentModel.find({docId})
-      res.json({success:true,appointments})
-   } catch (error) {
-      console.log(error);
-    res.json({success:false,message:error.message})
-   }
-}
-const completeAppointment = async(req,res) =>{
+const getAppointments = async (req, res) => {
   try {
-    const {docId,appointmentId} = req.body
+    const { docId } = req.body
 
-   const appointmentData = await appointmentModel.findById(appointmentId)
+    if (!docId) {
+      return res.json({ success: false, message: "Doctor ID missing" })
+    }
 
-   if(appointmentData && appointmentData.docId === docId){
-      await appointmentModel.findByIdAndUpdate(appointmentId,{isCompleted:true})
-      return res.json({success:true,message:"Appointment completed"})
-   }
+    const appointments = await appointmentModel.find({ docId }).sort({ date: -1 })
+
+    return res.json({ success: true, appointments })
   } catch (error) {
-   console.log(error);
-    res.json({success:false,message:error.message})
+    console.log(error)
+    return res.json({ success: false, message: error.message })
   }
 }
-const cancelAppointment = async(req,res) =>{
+const completeAppointment = async (req, res) => {
   try {
-    const {docId,appointmentId} = req.body
+    const { docId, appointmentId } = req.body
 
-   const appointmentData = await appointmentModel.findById(appointmentId)
+    if (!docId || !appointmentId) {
+      return res.json({ success: false, message: "Missing fields" })
+    }
 
-   if(appointmentData && appointmentData.docId === docId){
-      await appointmentModel.findByIdAndUpdate(appointmentId,{cancelled:true})
-      return res.json({success:true,message:"Appointment cancelled"})
-   }
+    const appointmentData = await appointmentModel.findById(appointmentId)
+
+    if (!appointmentData || appointmentData.docId !== docId) {
+      return res.json({ success: false, message: "Appointment not found" })
+    }
+
+    await appointmentModel.findByIdAndUpdate(appointmentId, {
+      isCompleted: true
+    })
+
+    return res.json({ success: true, message: "Appointment completed" })
   } catch (error) {
-   console.log(error);
-    res.json({success:false,message:error.message})
+    console.log(error)
+    return res.json({ success: false, message: error.message })
   }
 }
+
+const cancelAppointment = async (req, res) => {
+  try {
+    const { docId, appointmentId } = req.body
+
+    if (!docId || !appointmentId) {
+      return res.json({ success: false, message: "Missing fields" })
+    }
+
+    const appointmentData = await appointmentModel.findById(appointmentId)
+
+    if (!appointmentData || appointmentData.docId !== docId) {
+      return res.json({ success: false, message: "Appointment not found" })
+    }
+
+    // original slot values save karo
+    const origSlotDate = appointmentData.slotDate
+    const origSlotTime = appointmentData.slotTime
+
+    // 1) appointment ko cancel mark karo
+    appointmentData.cancelled = true
+    await appointmentData.save()
+
+    // 2) doctor ke slots_booked se slot hatao
+    if (origSlotDate && origSlotTime) {
+      const doctor = await doctorModel.findById(docId)
+
+      if (doctor && doctor.slots_booked) {
+        const daySlots = doctor.slots_booked[origSlotDate]
+
+        if (Array.isArray(daySlots)) {
+          const newDaySlots = daySlots.filter(t => t !== origSlotTime)
+          if (newDaySlots.length > 0) {
+            doctor.slots_booked[origSlotDate] = newDaySlots
+          } else {
+            delete doctor.slots_booked[origSlotDate]
+          }
+
+          await doctor.save()
+          console.log("✅ DOCTOR SLOT REOPENED (DOC PANEL):", origSlotDate, origSlotTime)
+        } else {
+          console.log("ℹ️ slots_booked[slotDate] array nahi hai:", origSlotDate)
+        }
+      }
+    }
+
+    return res.json({ success: true, message: "Appointment cancelled" })
+  } catch (error) {
+    console.log(error)
+    return res.json({ success: false, message: error.message })
+  }
+}
+
 const doctorDashboard = async(req,res) =>{
    try {
      const {docId} = req.body 

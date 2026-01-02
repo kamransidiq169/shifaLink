@@ -1,47 +1,48 @@
 // DoctorsByPharmacy.jsx
-import { useParams } from "react-router-dom";
-import { pharmacies } from "../assets/assets_frontend/pharmacies.js";
+import { useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 
-// demo doctors data (baad me backend se la sakte ho)
-const doctorsByPharmacy = {
-  "shifa-care-pharmacy": [
-    { id: 1, name: "Dr. A. Khan", speciality: "General Physician" },
-    { id: 2, name: "Dr. S. Ahmad", speciality: "Pediatrics" },
-  ],
-  "city-medico-pharmacy": [
-    { id: 3, name: "Dr. R. Bhat", speciality: "Dermatologist" },
-  ],
-  // baaki pharmacies ke doctors yahan add karo
-};
 
 const DoctorsByPharmacy = () => {
+  const {doctors} = useContext(AppContext)
+  console.log(doctors);
+  
   const { pharmacyId } = useParams();
-
-  const pharmacy = pharmacies.find((p) => p.id === pharmacyId);
-  const doctors = doctorsByPharmacy[pharmacyId] || [];
-
-  if (!pharmacy) {
-    return <p>Pharmacy not found.</p>;
-  }
+  const navigate = useNavigate()
+  // Filter doctors by pharmacyId or show all if no specific match
+  const filteredDoctors = doctors.filter(doctor => doctor.pharmacy === pharmacyId);
 
   return (
-    <div className="pharmacy-doctors-page">
-      <h1>{pharmacy.name}</h1>
-      <p>{pharmacy.area}</p>
+    <section className="doctors-section">
+  <div className="section-header">
+    <h2 className="section-title">
+      Doctors Available at {pharmacyId}
+    </h2>
+    <p className="section-subtitle">
+      Browse qualified doctors currently associated with this pharmacy
+      and check their availability in real time.
+    </p>
+  </div>
 
-      <h2>Available Doctors</h2>
-      {doctors.length === 0 ? (
-        <p>No doctors listed yet.</p>
-      ) : (
-        <ul>
-          {doctors.map((doc) => (
-            <li key={doc.id}>
-              <strong>{doc.name}</strong> – {doc.speciality}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+      <div className="rightDoctors">
+        {filteredDoctors.map((doc) => (
+          <div key={doc._id} className="allDoctors" onClick={() => navigate(`/pharmacyappointment/${doc._id}`)}>
+            <img src={doc.image} alt="doctor image" />
+            <div className="doctorANS">
+              <div className="docInfo">
+                <p className={doc.avaliable ? "dot" : "notdot"}></p>
+                <p className={doc.avaliable ? "aval" : "notaval"}>{doc.avaliable ? "Available" : "Not Available"}</p>
+              </div>
+              <div className="ns">
+                <h3>{doc.name}</h3>
+                <p>{doc.speciality}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 };
 
