@@ -342,914 +342,1787 @@ body{
 }
 
 /* add doctor.jsx starts here */
-
+/* Production-ready Add Doctor Form CSS */
 .add-doctor-container {
-  padding: 20px 90px;
-  background-color: #f9fafc;
-  
   width: 100vw;
-  font-family: "Inter", sans-serif;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background: #f8fafc;
+  min-height: 100vh;
 }
 
 .form-title {
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 700;
   color: #1e293b;
-  margin-bottom: 25px;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .form-card {
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  padding: 50px 60px;
-  max-width: 1000px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 2.5rem;
+  border: 1px solid #e2e8f0;
 }
 
-/* Upload Section */
 .upload-section {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 2.5rem;
 }
 
 .upload-circle {
-  width: 110px;
-  height: 110px;
+  display: block;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 1rem;
   border-radius: 50%;
-  border: 2px dashed #d1d5db;
+  border: 3px dashed #cbd5e1;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 12px;
-  color: #9ca3af;
-  font-size: 36px;
   cursor: pointer;
   transition: all 0.2s ease;
-  overflow: hidden;
+  background: #f8fafc;
 }
 
 .upload-circle:hover {
-  border-color: #2563eb;
-  color: #2563eb;
+  border-color: #3b82f6;
+  background: #eff6ff;
 }
 
 .upload-circle img {
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .upload-section p {
-  font-size: 14px;
-  color: #6b7280;
+  color: #64748b;
+  margin: 0;
+  font-size: 0.875rem;
 }
 
-/* Form Grid */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 26px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-/* Form Elements */
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+}
+
+.address-group {
+  grid-column: 1 / -1;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
 }
 
 .form-group label {
-  font-size: 13px;
-  color: #475569;
-  font-weight: 500;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid #e2e8f0;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
-  font-size: 14px;
-  outline: none;
-  transition: 0.2s;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background: white;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.address-group input {
-  margin-bottom: 8px;
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
-.full-width {
-  grid-column: span 2;
+/* Availability Section */
+.availability-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.availability-row select,
+.availability-row input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.add-slot-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-left: 0.75rem;
+}
+
+.add-slot-btn:hover {
+  background: #2563eb;
+}
+
+.add-slot-btn:active {
+  transform: translateY(1px);
 }
 
 /* Submit Button */
 .submit-btn {
-  margin-top: 25px;
-  background-color: #2563eb;
-  color: #fff;
+  width: 100%;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
   border: none;
+  padding: 1rem 2rem;
   border-radius: 8px;
-  padding: 12px 30px;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 1.125rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.4);
 }
 
 .submit-btn:hover {
-  background-color: #1d4ed8;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px 0 rgba(59, 130, 246, 0.4);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
 }
 
 /* Responsive */
-@media (max-width: 992px) {
+@media (max-width: 768px) {
   .form-card {
-    padding: 30px;
-    max-width: 95%;
+    padding: 1.5rem;
+    margin: 1rem;
   }
-
+  
   .form-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
-
-  .full-width {
-    grid-column: span 1;
+  
+  .upload-circle {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .availability-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .add-slot-btn {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    align-self: flex-end;
+    width: auto;
   }
 }
 
-@media (max-width: 600px) {
-  .add-doctor-container {
-    padding: 20px;
-  }
+/* Loading & Error States */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
 
-  .form-title {
-    text-align: center;
-  }
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f4f6;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
 
-  .form-card {
-    padding: 25px;
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Success Animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
- 
+
+.form-card {
+  animation: slideIn 0.4s ease-out;
+}
+
 
 /* doctorlist.jsx */
 
-.doctors-list-container {
-
-  display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
-  justify-content: center;
-  background: #f4f6fa;
+/* .doctors-page {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
   min-height: 100vh;
-  padding: 40px 16px;
+  background: #f8fafc;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 32px;
+  color: #1f2937;
+  margin: 0;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 24px;
+  }
+}
+
+.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 480px) {
+  .doctors-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 8px;
+  }
 }
 
 .doctor-card {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 6px 24px rgba(30, 54, 105, 0.10), 0 1.5px 6px rgba(60, 68, 90, 0.08);
-  width: 285px;
-  transition: transform 0.18s cubic-bezier(.34,1.56,.64,1), box-shadow 0.18s;
-  display: flex;
-  flex-direction: column;
-  /* align-items: center; */
-  margin-bottom: 10px;
-  /* padding: 34px 18px 28px 18px; */
-  padding-bottom: 14px;
-  position: relative;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
 }
 
 .doctor-card:hover {
-  transform: translateY(-8px) scale(1.025);
-  box-shadow: 0 16px 32px rgba(30,54,105,0.15), 0 4px 12px rgba(60, 68, 90, 0.13);
-}
-
-.doctor-image {
-  width: 288px;
-  height: 258px;
-  object-fit: cover;
-  /* border-radius: 50%; */
-  background: #dfeafd;
-  border: 4px solid #e7ebf3;
-  margin-bottom: 18px;
-  box-shadow: 0 2px 16px rgba(47,74,150,0.07);
-  transition: border-color 0.2s;
-}
-
-.doctor-card:hover .doctor-image {
-  border-color: #b9dafe;
-}
-
-.doctor-name {
-  font-size: 1.22em;
-  font-weight: 700;
-  margin: 8px 0 2px 0;
-  color: #223559;
-  padding-left: 10px;
-}
-
-.doctor-speciality {
-  font-size: 1em;
-  font-weight: 500;
-  color: #4669bb;
-  margin-bottom: 1px;
-  padding-left: 10px;
-}
-
-.doctor-degree,
-.doctor-email,
-.doctor-experience,
-.doctor-fees {
-  font-size: 0.97em;
-  color: #6a7690;
-  margin: 2px 0;
-}
-
-.doctor-availability {
-  margin-top: 11px;
-  font-weight: 600;
-  font-size: 1em;
-  letter-spacing: 0.02em;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  padding-left: 10px;
-  /* justify-content: center; */
-}
-
-.available {
-  color: #0ecb81;
-}
-
-.not-available {
-  color: #e1323d;
-}
-
-@media (max-width: 800px) {
-  .doctors-list-container {
-    gap: 15px;
-    padding: 15px 6px;
-  }
-  .doctor-card {
-    width: 98vw;
-    max-width: 330px;
-    padding: 22px 11px 20px 11px;
-  }
-}
-/* .upperDetails{
-  display: flex;
-  align-items: center;
-  gap: 191px;
-}
-.upperDetails p{
-  font-size: 21px;
-} */
- .appointments-container {
-  padding: 20px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-h2 {
-  /* text-align: center; */
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.appointments-table {
-  width: 1500px;
-  border-collapse: collapse;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.appointments-table th,
-.appointments-table td {
-  padding: 12px 16px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-.appointments-table th {
-  background-color: #f4f4f4;
-  color: #444;
-  font-weight: 600;
-}
-
-.appointments-table tr:nth-child(even) {
-  background-color: #fafafa;
-}
-
-.doctor-cell {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: center;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
 }
 
 .doctor-img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.time {
-  color: #666;
-  font-size: 0.9em;
-}
-
-.cancel-btn {
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-}
-
-.cancel-btn:hover {
-  background-color: #e60000;
-}
-
-/* mydashboard */
-.dashboard-container {
-  width: 1500px;
-  padding: 32px;
-  background: white
-}
-
-.dashboard-stats {
-  display: flex;
-  gap: 32px;
-  margin-bottom: 32px;
-}
-
-.stat-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 24px 0 rgba(55, 82, 168, 0.06);
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 24px;
-  min-width: 160px;
-}
-
-.stat-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: #f0f4ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.doctor-icon::before {
-  content: "👨‍⚕️";
-  font-size: 36px;
-}
-
-.appoint-icon::before {
-  content: "📅";
-  font-size: 36px;
-}
-
-.patient-icon::before {
-  content: "👤";
-  font-size: 36px;
-}
-
-.stat-count {
-  font-weight: 600;
-  font-size: 28px;
-  color: #3752a8;
-}
-
-.stat-label {
-  color: #888;
-  font-size: 17px;
-}
-
-.latest-bookings-section {
-  background: #fff;
-  padding: 12px 24px 24px 24px;
-  border-radius: 12px;
-  box-shadow: 0 2px 24px 0 rgba(55, 82, 168, 0.06);
-}
-
-.bookings-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 19px;
-  font-weight: 600;
-  border-bottom: 1px solid #ecebf0;
-  padding: 18px 0;
-  margin-bottom: 10px;
-}
-
-.header-icon {
-  font-size: 21px;
-  color: #3752a8;
-}
-
-.latest-bookings-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.booking-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 0;
-  border-bottom: 1px solid #ecebf0;
-}
-
-.booking-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.booking-avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  object-fit: cover;
-  background: #eee;
-}
-
-.doctor-name {
-  font-weight: 500;
-  font-size: 16px;
-}
-
-.booking-date {
-  color: #7d7d7d;
-  font-size: 14px;
-}
-
-.booking-status.cancelled {
-  color: #e86565;
-  font-weight: 500;
-  font-size: 16px;
-}
-
-/* doctorAppointments */
-
-.doctor-appointments-container {
-  width: 1500px;
-  padding: 32px;
-  background: white;
-  min-height: 100vh;
-}
-
-.doctor-appointments-container h1 {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: #1f2937;
-}
-
-.appointments-table-wrapper {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
-}
-
-.doctor-appointments-table {
   width: 100%;
-  border-collapse: collapse;
-  font-family: 'Inter', Arial, sans-serif;
+  height: 200px;
+  object-fit: cover;
 }
 
-.doctor-appointments-table thead {
-  background: #fafafa;
-  border-bottom: 1px solid #e5e7eb;
+.doctor-info {
+  padding: 24px;
 }
 
-.doctor-appointments-table th {
-  text-align: left;
-  padding: 16px 14px;
+.doctor-info h3 {
+  font-size: 22px;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+.specialty {
+  color: #3b82f6;
+  font-size: 16px;
   font-weight: 600;
-  font-size: 15px;
-  color: #6b7280;
+  margin: 0 0 12px 0;
 }
 
-.doctor-appointments-table td {
-  padding: 16px 14px;
-  border-bottom: 1px solid #f3f4f6;
-  color: #374151;
-  font-size: 15px;
+.fees {
+  font-size: 18px;
+  font-weight: 700;
+  color: #059669;
+  margin: 0 0 24px 0;
 }
 
-.doctor-appointments-table tbody tr:hover {
-  background: #fafbfc;
-}
-
-.patient-cell {
+.availability {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.patient-avatar {
+.status {
+  font-weight: 600;
+  font-size: 14px;
+} */
+
+/* TOGGLE SWITCH */
+/* .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cbd5e1;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider {
+  background-color: #10b981;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.no-doctors {
+  text-align: center;
+  padding: 80px 20px;
+  color: #6b7280;
+}
+
+.no-doctors h2 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: #374151;
+} */
+
+
+
+/* ===========================================
+   DOCTORS LIST - 100% COMPLETE RESPONSIVE CSS
+   Mobile-First | Every Screen Perfect
+=========================================== */
+
+/* RESET & BASE */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.doctors-list-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+/* DOCTOR CARD */
+.doctor-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.doctor-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+/* DOCTOR IMAGE */
+.doctor-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f1f5f9;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.doctor-card:hover .doctor-image {
+  transform: scale(1.05);
+  border-color: #e2e8f0;
+}
+
+/* DOCTOR NAME */
+.doctor-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+/* DOCTOR SPECIALITY */
+.doctor-speciality {
+  color: #64748b;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+  padding: 0.35rem 0.85rem;
+  background: #f1f5f9;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+/* AVAILABILITY */
+.doctor-availability {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+/* AVAILABLE */
+.doctor-availability.available {
+  background: #10b981;
+  color: white;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.doctor-availability.available:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+/* NOT AVAILABLE */
+.doctor-availability.not-available {
+  background: #6b7280;
+  color: white;
+  box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+}
+
+.doctor-availability.not-available:hover {
+  background: #4b5563;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(107, 114, 128, 0.4);
+}
+
+/* CUSTOM CHECKBOX */
+.doctor-availability input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.doctor-availability.available input[type="checkbox"]:checked {
+  background: white;
+  border-color: white;
+}
+
+.doctor-availability.available input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  font-weight: bold;
+  color: #10b981;
+}
+
+.doctor-availability input[type="checkbox"]:hover {
+  transform: scale(1.1);
+}
+
+/* ===========================================
+   RESPONSIVE BREAKPOINTS - MOBILE FIRST
+=========================================== */
+
+/* MOBILE < 480px */
+@media (max-width: 479px) {
+  .doctors-list-container {
+    padding: 1rem 0.5rem;
+    gap: 1rem;
+  }
+  
+  .doctor-card {
+    padding: 1.25rem 1rem;
+  }
+  
+  .doctor-image {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .doctor-name {
+    font-size: 1.15rem;
+  }
+  
+  .doctor-speciality {
+    font-size: 0.9rem;
+    padding: 0.25rem 0.7rem;
+  }
+  
+  .doctor-availability {
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
+    gap: 6px;
+  }
+}
+
+/* SMALL MOBILE < 360px */
+@media (max-width: 359px) {
+  .doctors-list-container {
+    padding: 0.75rem 0.25rem;
+    gap: 0.9rem;
+  }
+  
+  .doctor-card {
+    padding: 1rem;
+  }
+  
+  .doctor-image {
+    width: 65px;
+    height: 65px;
+  }
+  
+  .doctor-name {
+    font-size: 1.1rem;
+  }
+}
+
+/* TABLET 480px - 767px */
+@media (min-width: 480px) and (max-width: 767px) {
+  .doctors-list-container {
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
+  }
+  
+  .doctor-image {
+    width: 85px;
+    height: 85px;
+  }
+}
+
+/* SMALL TABLET 768px - 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .doctors-list-container {
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    padding: 2rem 1.25rem;
+    gap: 1.75rem;
+  }
+  
+  .doctor-card {
+    padding: 1.75rem;
+  }
+  
+  .doctor-image {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .doctor-name {
+    font-size: 1.35rem;
+  }
+}
+
+/* DESKTOP 1024px - 1279px */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .doctors-list-container {
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    padding: 2.5rem 1.5rem;
+    gap: 2rem;
+  }
+  
+  .doctor-card {
+    padding: 2rem;
+  }
+  
+  .doctor-name {
+    font-size: 1.45rem;
+  }
+}
+
+/* LARGE DESKTOP 1280px - 1400px */
+@media (min-width: 1280px) {
+  .doctors-list-container {
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    padding: 3rem 2rem;
+    gap: 2.25rem;
+  }
+  
+  .doctor-card {
+    padding: 2.25rem;
+  }
+  
+  .doctor-image {
+    width: 95px;
+    height: 95px;
+  }
+  
+  .doctor-name {
+    font-size: 1.55rem;
+  }
+}
+
+/* EXTRA LARGE > 1400px */
+@media (min-width: 1401px) {
+  .doctors-list-container {
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 2.5rem;
+  }
+}
+
+/* LANDSCAPE MOBILE */
+@media (max-height: 500px) and (orientation: landscape) {
+  .doctors-list-container {
+    padding: 1rem 0.75rem;
+    gap: 1rem;
+  }
+  
+  .doctor-card {
+    padding: 1.25rem;
+  }
+}
+
+/* HIGH DPI SCREENS */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .doctor-card {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* EMPTY STATE */
+.doctors-list-container:empty::after {
+  content: 'No doctors available 👨‍⚕️';
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: #64748b;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* LOADING */
+.doctor-card.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+
+
+/* appointments.jsx */
+
+
+/* Appointments Table - Production Ready */
+/* appointments.css - 100% RESPONSIVE NO BULLSHIT */
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
+
+:root {
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --dark: #1e293b;
+  --gray: #64748b;
+  --blue: #3b82f6;
+  --red: #ef4444;
+  --border: #e2e8f0;
+  --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  --radius: 12px;
+}
+
+body { 
+  font-family: system-ui, -apple-system, sans-serif; 
+  line-height: 1.5; 
+}
+
+/* MAIN LAYOUT */
+.appointments-main {
+  width: 1450px;
+  min-height: 100vh;
+  padding: 20px;
+  /* background: var(--bg); */
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.page-header h1 {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  color: var(--dark);
+  font-weight: 700;
+}
+
+.count {
+  background: var(--white);
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-weight: 600;
+  color: var(--gray);
+  border: 1px solid var(--border);
+}
+
+/* DESKTOP TABLE */
+.desktop-view {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.table-wrap {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  padding: 16px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table th {
+  background: #f1f5f9;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.data-table tr:hover td {
+  background: #f8fafc;
+}
+
+.doctor-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.doc-img {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   object-fit: cover;
-  background: #e5e7eb;
+  border: 2px solid var(--blue);
 }
 
-.payment-badge {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 13px;
+.tag, .btn-cancel {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: none;
+}
+
+.tag.cancelled {
+  background: #fee2e2;
+  color: var(--red);
+}
+
+.btn-cancel {
+  background: var(--red);
+  color: white;
+  cursor: pointer;
+}
+
+.btn-cancel:hover {
+  background: #dc2626;
+}
+
+/* MOBILE CARDS */
+.mobile-view {
+  display: none;
+}
+
+.appt-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+}
+
+.appt-card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tag {
+  padding: 4px 10px !important;
+}
+
+.patient-info {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: var(--dark);
+}
+
+.patient-info strong {
+  color: var(--dark);
+}
+
+.appt-details {
+  background: #f1f5f9;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: var(--gray);
+}
+
+.doctor-info {
+  padding: 12px;
+  background: #eff6ff;
+  border-radius: 8px;
+  margin-bottom: 16px;
   font-weight: 500;
-  background: #f3f4f6;
-  color: #6b7280;
+}
+
+.amount {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.btn-full {
+  width: 100%;
+  padding: 14px;
+  background: var(--red);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-full:hover {
+  background: #dc2626;
+}
+
+/* STATES */
+.loading-full {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: var(--gray);
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid #f3f4f6;
+  border-top: 3px solid var(--blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.no-data {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--gray);
+}
+
+.empty-emoji {
+  font-size: 64px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.no-data h3 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  color: var(--dark);
+}
+
+/* RESPONSIVE - NO SCROLL HELL */
+@media (max-width: 900px) {
+  .desktop-view { display: none; }
+  .mobile-view { display: block; }
+  
+  .appointments-main { padding: 15px; }
+  
+  .page-header { 
+    flex-direction: column; 
+    align-items: stretch; 
+    text-align: center; 
+  }
+}
+
+@media (max-width: 500px) {
+  .appt-card { padding: 16px; }
+  .card-top { flex-direction: column; gap: 8px; text-align: center; }
+}
+
+
+/* mydashboard */
+/* Super Clean Dashboard CSS */
+* {
+  box-sizing: border-box;
+}
+
+.dashboard-container {
+  padding: 2rem;
+  background: #f5f7fa;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, sans-serif;
+  width: 100vw;
+}
+
+/* Stats - Simple Grid */
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  gap: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  background: #3b82f6;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.25rem;
+}
+
+.stat-count {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.stat-label {
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Bookings */
+.latest-bookings {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.bookings-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #f8fafc;
+}
+
+.header-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.booking-card {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.booking-card:last-child {
+  border-bottom: none;
+}
+
+.booking-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.booking-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.doctor-name {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.booking-date {
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.cancel-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cancel-status {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Loading */
+.dashboard-loading {
+  text-align: center;
+  padding: 3rem;
+  background: white;
+  border-radius: 8px;
   border: 1px solid #e5e7eb;
 }
 
+.dashboard-spinner {
+  width: 40px;
+  height: 40px;
+  color: #3b82f6;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+  
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .booking-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+
+/* doctorAppointments */
+:root {
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --text: #0f172a;
+  --muted: #64748b;
+  --primary: #2563eb;
+  --success: #10b981;
+  --danger: #ef4444;
+  --radius: 14px;
+}
+
+/* ===== Page ===== */
+.doctor-appointments-container {
+  width: 100vw;
+  min-height: 100vh;
+  background: var(--bg);
+  padding: 2rem;
+}
+
+.doctor-appointments-container h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+/* ===== Desktop Table ===== */
+.appointments-table-wrapper {
+  background: var(--card);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.doctor-appointments-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.doctor-appointments-table thead {
+  background: #f1f5f9;
+}
+
+.doctor-appointments-table th {
+  padding: 1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.doctor-appointments-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.doctor-appointments-table tr:hover {
+  background: #f9fafb;
+}
+
+/* ===== Patient ===== */
+.patient-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.patient-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* ===== Badges ===== */
+.payment-badge {
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* ===== Status ===== */
+.status-completed {
+  background: #dcfce7;
+  color: var(--success);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.status-cancelled {
+  background: #fee2e2;
+  color: var(--danger);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+/* ===== Buttons ===== */
 .action-buttons {
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .cancel-btn,
 .complete-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   border: none;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
 }
 
 .cancel-btn {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-}
-
-.cancel-btn:hover {
-  background: rgba(239, 68, 68, 0.2);
+  background: #fee2e2;
+  color: var(--danger);
 }
 
 .complete-btn {
-  background: rgba(34, 197, 94, 0.1);
-  color: #22c55e;
+  background: #dcfce7;
+  color: var(--success);
 }
 
-.complete-btn:hover {
-  background: rgba(34, 197, 94, 0.2);
+/* ===== MOBILE & TABLET ===== */
+@media (max-width: 900px) {
+  .doctor-appointments-container {
+    padding: 1.25rem;
+  }
+
+  .doctor-appointments-table thead {
+    display: none;
+  }
+
+  .doctor-appointments-table,
+  .doctor-appointments-table tbody,
+  .doctor-appointments-table tr {
+    display: block;
+    width: 100%;
+  }
+
+  .doctor-appointments-table tr {
+    background: white;
+    margin-bottom: 1rem;
+    border-radius: 16px;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  }
+
+  .doctor-appointments-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    border: none;
+    font-size: 0.9rem;
+  }
+
+  .doctor-appointments-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .patient-cell {
+    justify-content: flex-end;
+  }
+
+  .action-buttons {
+    justify-content: flex-end;
+  }
 }
 
 
 /* doctorDashboard.css */
-.doctor-dashboard {
-  width: 1500px;
-  padding: 32px;
-  background: white;
-  min-height: 100vh;
-  font-family: "Inter", Arial, sans-serif;
+/* ========== Root Theme ========== */
+:root {
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --primary: #2563eb;
+  --success: #10b981;
+  --danger: #ef4444;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e5e7eb;
+  --radius: 14px;
 }
 
-/* Top cards */
+/* ========== Layout ========== */
+.doctor-dashboard {
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+  padding: 3rem 2rem;
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+/* ========== Stats Section ========== */
 .dd-stats {
-  display: flex;
-  gap: 24px;
-  margin-bottom: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  margin-bottom: 3rem;
 }
 
 .dd-card {
-  flex: 1;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 24px rgba(55, 82, 168, 0.08);
-  padding: 20px 22px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 2rem;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 1.75rem;
+  border: 1px solid var(--border);
+  transition: 0.25s ease;
+}
+
+.dd-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.05);
 }
 
 .dd-icon {
-  width: 46px;
-  height: 46px;
+  width: 64px;
+  height: 64px;
   border-radius: 14px;
-  background: #eef2ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  color: white;
 }
 
-/* Simple emoji icons (you can replace with svg/icon library) */
-.earnings-icon::before {
-  content: "💰";
-}
-.appointment-icon::before {
-  content: "📘";
-}
-.patient-icon::before {
-  content: "👤";
-}
+.earnings-icon { background: var(--success); }
+.appointment-icon { background: var(--primary); }
+.patient-icon { background: #f59e0b; }
 
 .dd-count {
-  font-size: 24px;
-  font-weight: 600;
-  color: #111827;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text);
 }
 
 .dd-label {
-  font-size: 14px;
-  color: #6b7280;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
-/* Latest bookings box */
+/* ========== Latest Bookings ========== */
 .dd-latest-box {
-  margin-top: 20px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 24px rgba(55, 82, 168, 0.06);
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
   overflow: hidden;
 }
 
 .dd-latest-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 16px 20px;
-  border-bottom: 1px solid #e5e7eb;
-  font-weight: 600;
-  font-size: 16px;
+  padding: 1.75rem 2rem;
+  background: #f1f5f9;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
 }
 
-.dd-header-icon {
-  font-size: 18px;
-  color: #4f46e5;
-}
-
+/* ========== List ========== */
 .dd-latest-list {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  max-height: 600px;
+  overflow-y: auto;
 }
 
 .dd-booking-item {
+  padding: 1.5rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 20px;
-  border-bottom: 1px solid #f3f4f6;
-  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  transition: 0.2s ease;
 }
 
-.dd-booking-item:last-child {
-  border-bottom: none;
+.dd-booking-item:hover {
+  background: #f9fafb;
 }
 
-/* highlight first row like screenshot */
 .dd-booking-highlight {
-  background: #f3faf4;
+  background: #eff6ff;
 }
 
+/* ========== Left Section ========== */
 .dd-booking-left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 1.25rem;
 }
 
 .dd-doc-avatar {
-  width: 36px;
-  height: 36px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: cover;
-  background: #e5e7eb;
 }
 
 .dd-doc-name {
-  font-size: 15px;
-  font-weight: 500;
-  color: #111827;
+  font-weight: 700;
+  color: var(--text);
 }
 
 .dd-booking-date {
-  font-size: 13px;
-  color: #6b7280;
+  font-size: 0.85rem;
+  color: var(--muted);
 }
 
-.dd-booking-right {
+/* ========== Right Section ========== */
+.dd-booking-right p {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.dd-booking-right p:nth-child(1) {
+  background: #fee2e2;
+  color: var(--danger);
+}
+
+.dd-booking-right p:nth-child(2) {
+  background: #dcfce7;
+  color: var(--success);
+}
+
+/* ========== Action Buttons ========== */
+.action-buttons {
   display: flex;
-  align-items: center;
+  gap: 0.5rem;
 }
 
-.dd-status-cancelled {
-  font-size: 14px;
-  color: #f97373;
-  font-weight: 500;
-}
-
-.dd-cancel-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
+.cancel-btn,
+.complete-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   border: none;
-  background: rgba(248, 113, 113, 0.08);
-  color: #f87171;
-  font-size: 16px;
   cursor: pointer;
-  transition: background 0.2s;
+  font-weight: 700;
+  transition: 0.2s ease;
 }
 
-.dd-cancel-btn:hover {
-  background: rgba(248, 113, 113, 0.16);
+.cancel-btn {
+  background: #fee2e2;
+  color: var(--danger);
 }
+
+.complete-btn {
+  background: #dcfce7;
+  color: var(--success);
+}
+
+.cancel-btn:hover {
+  background: #fecaca;
+}
+
+.complete-btn:hover {
+  background: #bbf7d0;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 900px) {
+  .dd-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dd-booking-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
 
 /* doctorprofile */
+/* ===========================
+   Doctor Profile – Production
+=========================== */
 
+:root {
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --text: #0f172a;
+  --muted: #64748b;
+  --primary: #2563eb;
+  --success: #16a34a;
+  --radius: 14px;
+}
+
+/* Page */
 .dp-page {
-  padding: 32px;
-  background: #f7f8ff;
+  width: 100vw;
+  background: var(--bg);
   min-height: 100vh;
-  font-family: "Inter", Arial, sans-serif;
-}
-
-.dp-card {
+  padding: 2.5rem 1rem;
   display: flex;
-  gap: 32px;
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 28px 32px;
-  box-shadow: 0 2px 24px rgba(55, 82, 168, 0.08);
-}
-
-/* Left image box */
-.dp-image-wrap {
-  width: 260px;
-  height: 320px;
-  border-radius: 18px;
-  background: #7a7cff;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  overflow: hidden;
+}
+
+/* Main Card */
+.dp-card {
+  background: var(--card);
+  width: 100%;
+  max-width: 980px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+  display: flex;
+  gap: 2.5rem;
+  height: 500px;
+}
+
+/* Image Section */
+.dp-image-wrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
 }
 
 .dp-image {
-  width: 100%;
-  height: 100%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
   object-fit: cover;
+  border: 4px solid #fff;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-/* Right side content */
+/* Content */
 .dp-content {
   flex: 1;
 }
 
+/* Doctor Name */
 .dp-name {
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 4px;
-  color: #111827;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--text);
 }
 
+/* Degree & Speciality */
 .dp-line {
+  margin-top: 0.4rem;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 18px;
-  font-size: 14px;
-  color: #6b7280;
-}
-
-.dp-degree {
-  font-weight: 500;
-}
-
-.dp-speciality {
-  color: #6b7280;
+  gap: 0.6rem;
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .dp-exp-pill {
-  padding: 3px 10px;
+  background: #eef2ff;
+  color: var(--primary);
+  padding: 0.25rem 0.8rem;
   border-radius: 999px;
-  background: #f3f4ff;
-  color: #4f46e5;
-  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
 /* Sections */
 .dp-section {
-  margin-bottom: 16px;
+  margin-top: 1.6rem;
 }
 
 .dp-section h3 {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 4px;
-  color: #111827;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
 }
 
 .dp-about {
-  font-size: 14px;
-  color: #4b5563;
-  line-height: 1.5;
+  line-height: 1.65;
+  color: var(--text);
 }
 
+/* Labels & Values */
 .dp-label {
   font-weight: 600;
-  font-size: 14px;
-  color: #111827;
+  color: var(--muted);
 }
 
 .dp-value {
-  font-size: 14px;
-  color: #4b5563;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Inputs */
+.dp-content input[type="text"],
+.dp-content input[type="number"] {
+  width: 100%;
+  max-width: 260px;
+  margin-top: 0.3rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.dp-content input:focus {
+  border-color: var(--primary);
 }
 
 /* Availability */
+.dp-availability {
+  margin-top: 1.8rem;
+}
+
 .dp-availability label {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  color: #111827;
+  gap: 0.6rem;
+  font-weight: 700;
+  color: var(--text);
 }
 
-.dp-availability input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-}
-
-/* Edit button */
+/* Button */
 .dp-edit-btn {
-  margin-top: 10px;
-  padding: 8px 18px;
-  border-radius: 999px;
+  margin-top: 2rem;
+  background: var(--primary);
+  color: #fff;
   border: none;
-  background: #4f46e5;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 500;
+  padding: 0.65rem 2rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 800;
   cursor: pointer;
-  transition: background 0.2s ease;
 }
 
 .dp-edit-btn:hover {
-  background: #4338ca;
+  background: #1d4ed8;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* ===========================
+   Mobile & Tablet
+=========================== */
+
+@media (max-width: 900px) {
   .dp-card {
     flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
-  .dp-image-wrap {
+  .dp-content {
     width: 100%;
-    max-width: 320px;
-    height: 260px;
+  }
+
+  .dp-line {
+    justify-content: center;
+  }
+
+  .dp-image {
+    width: 130px;
+    height: 130px;
   }
 }
-.availability-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-  align-items: center;
+
+@media (max-width: 500px) {
+  .dp-card {
+    padding: 1.5rem;
+  }
+
+  .dp-name {
+    font-size: 1.5rem;
+  }
 }
 
-.availability-select, .time-input {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.add-slot-btn {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}

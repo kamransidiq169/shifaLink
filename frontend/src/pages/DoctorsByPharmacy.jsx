@@ -13,13 +13,13 @@ const DoctorsByPharmacy = () => {
   // Filter doctors by pharmacyId or show all if no specific match
   const filteredDoctors = doctors.filter(doctor => doctor.pharmacy === pharmacyId);
 
-  return (
+  return ( 
     <section className="doctors-section">
   <div className="section-header">
     <h2 className="section-title">
       Doctors Available at {pharmacyId}
     </h2>
-    <p className="section-subtitle">
+    <p className="section-subtitle" style={{textAlign:"center"}}>
       Browse qualified doctors currently associated with this pharmacy
       and check their availability in real time.
     </p>
@@ -27,7 +27,7 @@ const DoctorsByPharmacy = () => {
 
       <div className="rightDoctors">
         {filteredDoctors.map((doc) => (
-          <div key={doc._id} className="allDoctors" onClick={() => navigate(`/pharmacyappointment/${doc._id}`)}>
+          <div key={doc._id} className="allDoctors" onClick={() => {navigate(`/pharmacyappointment/${doc._id}`); window.scrollTo({ top: 0, behavior: "smooth" })}} >
             <img src={doc.image} alt="doctor image" />
             <div className="doctorANS">
               <div className="docInfo">

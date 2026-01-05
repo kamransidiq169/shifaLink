@@ -5,18 +5,24 @@ import { DoctorContext } from "../../context/DoctorContext";
 export const DoctorDashboard = () => {
   const { dashData, getdashData, dToken,cancelAppointment,completeAppointment } = useContext(DoctorContext);
 
-  useEffect(() => {
+ // Har 3 seconds mein check karo
+useEffect(() => {
+  const interval = setInterval(() => {
     if (dToken) {
-      getdashData();
+      getdashData() // Silent refresh
     }
-  }, [dToken]);
+  }, 3000) // 3 seconds
+  
+  return () => clearInterval(interval)
+}, [dToken, getdashData])
+
 
   return (
     <div className="doctor-dashboard">
       {/* Top summary cards */}
       <div className="dd-stats">
         <div className="dd-card">
-          <div className="dd-icon earnings-icon"></div>
+          {/* <div className="dd-icon earnings-icon"></div> */}
           <div>
             <div className="dd-count">${dashData.earning || 0}</div>
             <div className="dd-label">Earnings</div>
@@ -24,7 +30,7 @@ export const DoctorDashboard = () => {
         </div>
 
         <div className="dd-card">
-          <div className="dd-icon appointment-icon"></div>
+          {/* <div className="dd-icon appointment-icon"></div> */}
           <div>
             <div className="dd-count">{dashData.appointmentData || 0}</div>
             <div className="dd-label">Appointments</div>
@@ -32,7 +38,7 @@ export const DoctorDashboard = () => {
         </div>
 
         <div className="dd-card">
-          <div className="dd-icon patient-icon"></div>
+          {/* <div className="dd-icon patient-icon"></div> */}
           <div>
             <div className="dd-count">{dashData.patients || 0}</div>
             <div className="dd-label">Patients</div>

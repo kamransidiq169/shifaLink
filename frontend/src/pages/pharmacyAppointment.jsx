@@ -1,15 +1,388 @@
-import { useContext, useEffect, useState } from "react"
+// import { useContext, useEffect, useState } from "react"
+// import { useParams, useNavigate } from "react-router-dom"
+// import { AppContext } from "../context/AppContext"
+// import { RelatedDoctors } from "../components/RelatedDoctors"
+// import { toast } from "react-toastify"
+// import axios from "axios"
+
+// export const PharmacyAppointments = () => {
+//   const [docInfo, setdocInfo] = useState(null)
+//   const [docSlots, setdocSlots] = useState([])
+//   const [slotIndex, setslotIndex] = useState(0)
+//   const [slotTime, setslotTime] = useState("")
+
+//   const { docId } = useParams()
+//   const navigate = useNavigate()
+
+//   const {
+//     currency,
+//     token,
+//     backendUrl,
+//     getDoctorsData,
+//     doctors,
+//     userData
+//   } = useContext(AppContext)
+
+//   const daysofWeek = [
+//     "Sunday",
+//     "Monday",
+//     "Tuesday",
+//     "Wednesday",
+//     "Thursday",
+//     "Friday",
+//     "Saturday"
+//   ]
+
+//   const makeDateKey = date =>
+//     `${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}`
+
+//   // ---- doctor pick from context ----
+//   const findDoctorbyId = () => {
+//     if (!doctors?.length) return
+//     const doc = doctors.find(d => String(d._id) === String(docId))
+//     setdocInfo(doc || null)
+//   }
+
+//   // doctors change ya docId change -> docInfo refresh
+//   useEffect(() => {
+//     if (doctors?.length > 0) {
+//       findDoctorbyId()
+//     }
+//   }, [doctors, docId])
+
+//   // docInfo change -> slots recalc
+//   useEffect(() => {
+//     if (docInfo?.availability?.length > 0) {
+//       getAvailableSlots()
+//     } else {
+//       setdocSlots([])
+//       setslotIndex(0)
+//       setslotTime("")
+//     }
+//   }, [docInfo])
+
+//   // ---- slots generator ----
+//   const getAvailableSlots = () => {
+//     if (!docInfo) return
+
+//     const docAvailability = docInfo.availability
+//     if (!docAvailability || !docAvailability.length) return
+
+//     const today = new Date()
+//     const upcomingWeek = []
+
+//     for (let i = 0; i < 7; i++) {
+//       const currentDate = new Date(today)
+//       currentDate.setDate(today.getDate() + i)
+
+//       const currentDayName = daysofWeek[currentDate.getDay()]
+//       const dayAvailability = docAvailability.find(
+//         slot => slot.day === currentDayName
+//       )
+
+//       if (!dayAvailability) continue
+
+//       const [fromHour, fromMin] = dayAvailability.from.split(":").map(Number)
+//       const [toHour, toMin] = dayAvailability.to.split(":").map(Number)
+
+//       let slotStart = new Date(currentDate)
+//       slotStart.setHours(fromHour, fromMin, 0, 0)
+
+//       const endTime = new Date(currentDate)
+//       endTime.setHours(toHour, toMin, 0, 0)
+
+//       // first day -> past time skip
+//       if (i === 0 && slotStart < today) {
+//         slotStart = new Date(Math.max(slotStart.getTime(), today.getTime()))
+//         slotStart.setMinutes(Math.ceil(slotStart.getMinutes() / 30) * 30)
+//       }
+
+//       const timeSlots = []
+//       const slotDateStr = makeDateKey(currentDate)
+
+//       while (slotStart < endTime) {
+//         const formattedTime = slotStart.toLocaleTimeString("en-GB", {
+//           hour: "2-digit",
+//           minute: "2-digit",
+//           hour12: false
+//         })
+
+//         let isBooked = false
+
+//         if (docInfo?.slots_booked?.[slotDateStr]) {
+//           const dateSlots = docInfo.slots_booked[slotDateStr]
+
+//           if (Array.isArray(dateSlots)) {
+//             isBooked = dateSlots.includes(formattedTime)
+//           } else if (dateSlots && dateSlots[formattedTime]) {
+//             isBooked = true
+//           }
+//         }
+
+//         timeSlots.push({
+//           datetime: new Date(slotStart),
+//           time: formattedTime,
+//           day: currentDayName,
+//           date: slotDateStr,
+//           dateObj: currentDate,
+//           available: !isBooked,
+//           booked: isBooked
+//         })
+
+//         slotStart.setMinutes(slotStart.getMinutes() + 30)
+//       }
+
+//       if (timeSlots.length > 0) {
+//         upcomingWeek.push({
+//           dateObj: currentDate,
+//           slots: timeSlots,
+//           dayName: currentDayName
+//         })
+//       }
+//     }
+
+//     setdocSlots(upcomingWeek)
+//     if (upcomingWeek.length > 0) {
+//       setslotIndex(0)
+//       setslotTime("")
+//     }
+//   }
+
+//   // ---- booking ----
+//   const bookAppointment = async () => {
+//     if (!token) {
+//       toast.warn("Login to book appointment")
+//       return navigate("/login")
+//     }
+
+//     if (!slotTime || !docSlots[slotIndex]) {
+//       toast.error("Please select date and time")
+//       return
+//     }
+
+//     if (!userData?._id) {
+//       toast.error("User not loaded, please login again")
+//       return
+//     }
+
+//     try {
+//       const selectedSlot = docSlots[slotIndex].slots.find(
+//         s => s.time === slotTime
+//       )
+//       if (!selectedSlot?.available) {
+//         toast.error("Slot not available")
+//         return
+//       }
+
+//       const slotDate = selectedSlot.date
+//       const slotTimeToSend = selectedSlot.time
+
+//       const { data } = await axios.post(
+//         backendUrl + "api/user/book-appointment",
+//         {
+//           docId,
+//           userId: userData._id,
+//           slotDate,
+//           slotTime: slotTimeToSend
+//         },
+//         { headers: { token } }
+//       )
+
+//       if (data.success) {
+//         toast.success(data.message)
+
+//         // MongoDB se latest doctor + slots
+//         await getDoctorsData()
+
+//         // getDoctorsData doctors ko update karega,
+//         // doctors change -> findDoctorbyId -> docInfo update -> getAvailableSlots
+//       } else {
+//         toast.error(data.message)
+//       }
+//     } catch (error) {
+//       console.log("❌ Book appointment error:", error.response?.data || error)
+//       toast.error(error.response?.data?.message || "Failed to book appointment")
+//     }
+//   }
+
+//   if (!doctors?.length)
+//     return <div className="loading">Loading doctors...</div>
+
+//   if (!docInfo)
+//     return <div className="loading">Doctor not found: {docId}</div>
+
+//   return (
+//     <>
+//       <div className="appointDoctorContainer">
+//         <div className="appointmentDoctorImage">
+//           <img src={docInfo.image} alt={docInfo.name} />
+//         </div>
+//         <div className="appointmentDoctorInfo">
+//           <h2>{docInfo.name}</h2>
+//           <div className="degspeexp">
+//             <p>{docInfo.degree}</p>
+//             <p>{docInfo.speciality}</p>
+//             <p className="exp">{docInfo.experience}</p>
+//           </div>
+//           <h4>About</h4>
+//           <p className="about">{docInfo.about}</p>
+//           <p>
+//             Pharmacy: <strong>{docInfo.pharmacy}</strong>
+//           </p>
+//           <p>
+//             Fee:{" "}
+//             <span className="fees">
+//               {currency}
+//               {docInfo.fees}
+//             </span>
+//           </p>
+
+//           <div style={{ marginTop: "10px" }}>
+//             <strong>📅 Schedule:</strong>
+//             {docInfo.availability?.map((slot, idx) => (
+//               <span
+//                 key={idx}
+//                 style={{
+//                   marginLeft: "10px",
+//                   background: "#e7f3ff",
+//                   padding: "2px 8px",
+//                   borderRadius: "4px"
+//                 }}
+//               >
+//                 {slot.day} ({slot.from}-{slot.to})
+//               </span>
+//             ))}
+//             <br />
+//             <small style={{ color: "#28a745" }}>
+//               📊
+//               {docSlots.reduce(
+//                 (total, day) =>
+//                   total + day.slots.filter(s => s.available).length,
+//                 0
+//               )}{" "}
+//               available slots found
+//             </small>
+//           </div>
+//         </div>
+//       </div>
+
+//       <div className="bookingContainer">
+//         <h3>Available Slots ({docSlots.length} days)</h3>
+//         {docSlots.length === 0 && (
+//           <div
+//             style={{
+//               textAlign: "center",
+//               padding: "40px",
+//               color: "#666"
+//             }}
+//           >
+//             No slots available for this doctor this week
+//           </div>
+//         )}
+//         {docSlots.length > 0 && (
+//           <div className="bookingSlots">
+//             <div className="daydateContainer">
+//               {docSlots.map((dayData, index) => (
+//                 <div
+//                   key={index}
+//                   className={`insidedaydate ${
+//                     slotIndex === index ? "doctorblue" : "none"
+//                   }`}
+//                   onClick={() => {
+//                     setslotIndex(index)
+//                     setslotTime("")
+//                   }}
+//                   style={{ cursor: "pointer" }}
+//                 >
+//                   <p>{dayData.dayName.slice(0, 3)}</p>
+//                   <p>{dayData.dateObj.toLocaleDateString()}</p>
+//                   <small
+//                     style={{
+//                       color: dayData.slots.filter(s => s.available).length
+//                         ? "#28a745"
+//                         : "#dc3545"
+//                     }}
+//                   >
+//                     {dayData.slots.filter(s => s.available).length}/
+//                     {dayData.slots.length}
+//                   </small>
+//                 </div>
+//               ))}
+//             </div>
+
+//             <div className="timeContainer">
+//               {docSlots[slotIndex]?.slots.map((item, index) => (
+//                 <p
+//                   key={index}
+//                   onClick={() => item.available && setslotTime(item.time)}
+//                   className={`time ${
+//                     item.time === slotTime ? "doctorblue" : "none"
+//                   } ${!item.available ? "booked-slot" : ""}`}
+//                   style={{
+//                     width: "200px",
+//                     opacity: item.available ? 1 : 0.6,
+//                     cursor: item.available ? "pointer" : "not-allowed",
+//                     position: "relative",
+//                     padding: "8px 12px"
+//                   }}
+//                 >
+//                   <span>{item.time.toLowerCase()}</span>
+//                 </p>
+//               ))}
+//             </div>
+
+//             {slotTime && (
+//               <div
+//                 style={{
+//                   padding: "15px",
+//                   background: "#d4edda",
+//                   borderRadius: "8px",
+//                   margin: "10px 0",
+//                   border: "1px solid #c3e6cb"
+//                 }}
+//               >
+//                 <strong style={{ color: "#155724" }}>✅ Selected:</strong>{" "}
+//                 {slotTime} | {docSlots[slotIndex].dayName} |{" "}
+//                 {docSlots[slotIndex].dateObj.toLocaleDateString()}
+//                 <br />
+//                 <strong style={{ color: "#155724" }}>💰 Fee:</strong>{" "}
+//                 {currency}
+//                 {docInfo.fees}
+//               </div>
+//             )}
+
+//             <button
+//               className="book"
+//               onClick={bookAppointment}
+//               disabled={!slotTime}
+//             >
+//               Book Appointment
+//             </button>
+//           </div>
+//         )}
+//       </div>
+
+//       <RelatedDoctors docId={docId} speciality={docInfo.speciality} />
+//     </>
+//   )
+// }
+
+// export default PharmacyAppointments
+
+// PharmacyAppointments.jsx - ULTIMATE PRODUCTION VERSION
+import { useContext, useEffect, useState, useCallback, useMemo } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { AppContext } from "../context/AppContext"
 import { RelatedDoctors } from "../components/RelatedDoctors"
 import { toast } from "react-toastify"
 import axios from "axios"
 
-export const PharmacyAppointments = () => {
+const PharmacyAppointments = () => {
   const [docInfo, setdocInfo] = useState(null)
   const [docSlots, setdocSlots] = useState([])
   const [slotIndex, setslotIndex] = useState(0)
   const [slotTime, setslotTime] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const { docId } = useParams()
   const navigate = useNavigate()
@@ -24,33 +397,24 @@ export const PharmacyAppointments = () => {
   } = useContext(AppContext)
 
   const daysofWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
+    "Sunday", "Monday", "Tuesday", "Wednesday", 
+    "Thursday", "Friday", "Saturday"
   ]
 
-  const makeDateKey = date =>
-    `${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}`
+  const makeDateKey = useCallback((date) =>
+    `${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}`, [])
 
-  // ---- doctor pick from context ----
-  const findDoctorbyId = () => {
-    if (!doctors?.length) return
-    const doc = doctors.find(d => String(d._id) === String(docId))
-    setdocInfo(doc || null)
-  }
-
-  // doctors change ya docId change -> docInfo refresh
-  useEffect(() => {
-    if (doctors?.length > 0) {
-      findDoctorbyId()
-    }
+  // Optimized doctor finder
+  const docInfoMemo = useMemo(() => {
+    if (!doctors?.length) return null
+    return doctors.find(d => String(d._id) === String(docId)) || null
   }, [doctors, docId])
 
-  // docInfo change -> slots recalc
+  useEffect(() => {
+    setdocInfo(docInfoMemo)
+  }, [docInfoMemo])
+
+  // Optimized slots generator
   useEffect(() => {
     if (docInfo?.availability?.length > 0) {
       getAvailableSlots()
@@ -61,22 +425,21 @@ export const PharmacyAppointments = () => {
     }
   }, [docInfo])
 
-  // ---- slots generator ----
-  const getAvailableSlots = () => {
-    if (!docInfo) return
-
-    const docAvailability = docInfo.availability
-    if (!docAvailability || !docAvailability.length) return
+  const getAvailableSlots = useCallback(() => {
+    if (!docInfo?.availability?.length) {
+      setdocSlots([])
+      return
+    }
 
     const today = new Date()
     const upcomingWeek = []
-
+    
     for (let i = 0; i < 7; i++) {
       const currentDate = new Date(today)
       currentDate.setDate(today.getDate() + i)
-
+      
       const currentDayName = daysofWeek[currentDate.getDay()]
-      const dayAvailability = docAvailability.find(
+      const dayAvailability = docInfo.availability.find(
         slot => slot.day === currentDayName
       )
 
@@ -91,7 +454,6 @@ export const PharmacyAppointments = () => {
       const endTime = new Date(currentDate)
       endTime.setHours(toHour, toMin, 0, 0)
 
-      // first day -> past time skip
       if (i === 0 && slotStart < today) {
         slotStart = new Date(Math.max(slotStart.getTime(), today.getTime()))
         slotStart.setMinutes(Math.ceil(slotStart.getMinutes() / 30) * 30)
@@ -107,17 +469,7 @@ export const PharmacyAppointments = () => {
           hour12: false
         })
 
-        let isBooked = false
-
-        if (docInfo?.slots_booked?.[slotDateStr]) {
-          const dateSlots = docInfo.slots_booked[slotDateStr]
-
-          if (Array.isArray(dateSlots)) {
-            isBooked = dateSlots.includes(formattedTime)
-          } else if (dateSlots && dateSlots[formattedTime]) {
-            isBooked = true
-          }
-        }
+        const isBooked = docInfo?.slots_booked?.[slotDateStr]?.includes?.(formattedTime) || false
 
         timeSlots.push({
           datetime: new Date(slotStart),
@@ -142,16 +494,11 @@ export const PharmacyAppointments = () => {
     }
 
     setdocSlots(upcomingWeek)
-    if (upcomingWeek.length > 0) {
-      setslotIndex(0)
-      setslotTime("")
-    }
-  }
+  }, [docInfo, makeDateKey])
 
-  // ---- booking ----
   const bookAppointment = async () => {
     if (!token) {
-      toast.warn("Login to book appointment")
+      toast.warn("Please login to book appointment")
       return navigate("/login")
     }
 
@@ -160,211 +507,210 @@ export const PharmacyAppointments = () => {
       return
     }
 
-    if (!userData?._id) {
-      toast.error("User not loaded, please login again")
+    const selectedSlot = docSlots[slotIndex].slots.find(s => s.time === slotTime)
+    if (!selectedSlot?.available) {
+      toast.error("Selected slot is no longer available")
       return
     }
 
+    if (!userData?._id) {
+      toast.error("Please login again")
+      return navigate("/login")
+    }
+
+    setLoading(true)
     try {
-      const selectedSlot = docSlots[slotIndex].slots.find(
-        s => s.time === slotTime
-      )
-      if (!selectedSlot?.available) {
-        toast.error("Slot not available")
-        return
-      }
-
-      const slotDate = selectedSlot.date
-      const slotTimeToSend = selectedSlot.time
-
       const { data } = await axios.post(
-        backendUrl + "api/user/book-appointment",
+        `${backendUrl}api/user/book-appointment`,
         {
           docId,
           userId: userData._id,
-          slotDate,
-          slotTime: slotTimeToSend
+          slotDate: selectedSlot.date,
+          slotTime: selectedSlot.time
         },
         { headers: { token } }
       )
 
       if (data.success) {
-        toast.success(data.message)
-
-        // MongoDB se latest doctor + slots
-        await getDoctorsData()
-
-        // getDoctorsData doctors ko update karega,
-        // doctors change -> findDoctorbyId -> docInfo update -> getAvailableSlots
+        toast.success("✅ Appointment booked successfully!")
+        setslotTime("") // Clear selection
+        await getDoctorsData() // Refresh data
       } else {
-        toast.error(data.message)
+        toast.error(data.message || "Booking failed")
       }
     } catch (error) {
-      console.log("❌ Book appointment error:", error.response?.data || error)
       toast.error(error.response?.data?.message || "Failed to book appointment")
+    } finally {
+      setLoading(false)
     }
   }
 
-  if (!doctors?.length)
-    return <div className="loading">Loading doctors...</div>
+  // Loading states
+  if (!doctors?.length) {
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+        <p>Loading doctor details...</p>
+      </div>
+    )
+  }
 
-  if (!docInfo)
-    return <div className="loading">Doctor not found: {docId}</div>
+  if (!docInfo) {
+    return (
+      <div className="error-container">
+        <h2>Doctor not found</h2>
+        <p>Doctor details not available</p>
+      </div>
+    )
+  }
+
+  const totalAvailableSlots = docSlots.reduce(
+    (total, day) => total + day.slots.filter(s => s.available).length, 0
+  )
+
+  const selectedSlot = docSlots[slotIndex]?.slots.find(s => s.time === slotTime)
 
   return (
-    <>
-      <div className="appointDoctorContainer">
-        <div className="appointmentDoctorImage">
-          <img src={docInfo.image} alt={docInfo.name} />
+    <div className="appointment-wrapper">
+      {/* DOCTOR PROFILE */}
+      <div className="doctor-profile-card">
+        <div className="doctor-image-section">
+          <img src={docInfo.image} alt={docInfo.name} loading="lazy" />
+          {/* <div className={`status-badge ${docInfo.avaliable ? 'online' : 'offline'}`}>
+            {docInfo.avaliable ? '🟢 Available' : '🔴 Unavailable'}
+          </div> */}
         </div>
-        <div className="appointmentDoctorInfo">
-          <h2>{docInfo.name}</h2>
-          <div className="degspeexp">
-            <p>{docInfo.degree}</p>
-            <p>{docInfo.speciality}</p>
-            <p className="exp">{docInfo.experience}</p>
-          </div>
-          <h4>About</h4>
-          <p className="about">{docInfo.about}</p>
-          <p>
-            Pharmacy: <strong>{docInfo.pharmacy}</strong>
-          </p>
-          <p>
-            Fee:{" "}
-            <span className="fees">
-              {currency}
-              {docInfo.fees}
-            </span>
-          </p>
-
-          <div style={{ marginTop: "10px" }}>
-            <strong>📅 Schedule:</strong>
-            {docInfo.availability?.map((slot, idx) => (
-              <span
-                key={idx}
-                style={{
-                  marginLeft: "10px",
-                  background: "#e7f3ff",
-                  padding: "2px 8px",
-                  borderRadius: "4px"
-                }}
-              >
-                {slot.day} ({slot.from}-{slot.to})
+        
+        <div className="doctor-details">
+          <div className="doctor-header">
+            <h1>{docInfo.name}</h1>
+            <div className="doctor-stats">
+              <span className="fee-highlight">
+                {currency}{docInfo.fees}
               </span>
-            ))}
-            <br />
-            <small style={{ color: "#28a745" }}>
-              📊
-              {docSlots.reduce(
-                (total, day) =>
-                  total + day.slots.filter(s => s.available).length,
-                0
-              )}{" "}
-              available slots found
-            </small>
+              <span className="pharmacy-tag">{docInfo.pharmacy}</span>
+            </div>
           </div>
+
+          <div className="doctor-badges">
+            <span>{docInfo.degree}</span>
+            <span>{docInfo.speciality}</span>
+            <span className="experience-badge">{docInfo.experience}</span>
+          </div>
+
+          <div className="schedule-info">
+            <h3>📅 Availability</h3>
+            <div className="schedule-tags">
+              {docInfo.availability?.map((slot, idx) => (
+                <span key={idx}>{slot.day} ({slot.from}-{slot.to})</span>
+              ))}
+            </div>
+            <div className="slots-count">
+              {totalAvailableSlots} slots available this week
+            </div>
+          </div>
+
+          {docInfo.about && (
+            <div className="doctor-about">
+              <h4>About Doctor</h4>
+              <p>{docInfo.about}</p>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="bookingContainer">
-        <h3>Available Slots ({docSlots.length} days)</h3>
-        {docSlots.length === 0 && (
-          <div
-            style={{
-              textAlign: "center",
-              padding: "40px",
-              color: "#666"
-            }}
-          >
-            No slots available for this doctor this week
+      {/* BOOKING SECTION */}
+      <div className="booking-section">
+        <div className="booking-header">
+          <h2>Book Appointment</h2>
+          <div className="slots-overview">
+            {docSlots.length} days • {totalAvailableSlots} slots available
           </div>
-        )}
-        {docSlots.length > 0 && (
-          <div className="bookingSlots">
-            <div className="daydateContainer">
-              {docSlots.map((dayData, index) => (
-                <div
-                  key={index}
-                  className={`insidedaydate ${
-                    slotIndex === index ? "doctorblue" : "none"
-                  }`}
-                  onClick={() => {
-                    setslotIndex(index)
-                    setslotTime("")
-                  }}
-                  style={{ cursor: "pointer" }}
-                >
-                  <p>{dayData.dayName.slice(0, 3)}</p>
-                  <p>{dayData.dateObj.toLocaleDateString()}</p>
-                  <small
-                    style={{
-                      color: dayData.slots.filter(s => s.available).length
-                        ? "#28a745"
-                        : "#dc3545"
+        </div>
+
+        {docSlots.length === 0 ? (
+          <div className="no-slots">
+            <div className="no-slots-icon">📅</div>
+            <h3>No slots available</h3>
+            <p>No appointments available this week</p>
+          </div>
+        ) : (
+          <>
+            {/* DAYS SELECTION */}
+            <div className="days-selector">
+              {docSlots.map((dayData, index) => {
+                const availableCount = dayData.slots.filter(s => s.available).length
+                return (
+                  <div
+                    key={index}
+                    className={`day-card ${slotIndex === index ? 'active' : ''}`}
+                    onClick={() => {
+                      setslotIndex(index)
+                      setslotTime("")
                     }}
                   >
-                    {dayData.slots.filter(s => s.available).length}/
-                    {dayData.slots.length}
-                  </small>
-                </div>
-              ))}
+                    <div className="day-name">{dayData.dayName.slice(0, 3)}</div>
+                    <div className="day-date">{dayData.dateObj.toLocaleDateString('en-GB')}</div>
+                    <div className={`day-count ${availableCount > 0 ? 'available' : 'unavailable'}`}>
+                      {availableCount}/{dayData.slots.length}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
 
-            <div className="timeContainer">
-              {docSlots[slotIndex]?.slots.map((item, index) => (
-                <p
+            {/* TIME SLOTS */}
+            <div className="time-slots-grid">
+              {docSlots[slotIndex]?.slots.map((slot, index) => (
+                <button
                   key={index}
-                  onClick={() => item.available && setslotTime(item.time)}
-                  className={`time ${
-                    item.time === slotTime ? "doctorblue" : "none"
-                  } ${!item.available ? "booked-slot" : ""}`}
-                  style={{
-                    width: "200px",
-                    opacity: item.available ? 1 : 0.6,
-                    cursor: item.available ? "pointer" : "not-allowed",
-                    position: "relative",
-                    padding: "8px 12px"
-                  }}
+                  className={`time-slot ${slotTime === slot.time ? 'selected' : ''} ${!slot.available ? 'booked' : ''}`}
+                  onClick={() => slot.available && setslotTime(slot.time)}
+                  disabled={!slot.available}
+                  title={!slot.available ? "Slot booked" : "Select time"}
                 >
-                  <span>{item.time.toLowerCase()}</span>
-                </p>
+                  {slot.time.toLowerCase()}
+                  {!slot.available && <span className="booked-indicator">✓</span>}
+                </button>
               ))}
             </div>
 
-            {slotTime && (
-              <div
-                style={{
-                  padding: "15px",
-                  background: "#d4edda",
-                  borderRadius: "8px",
-                  margin: "10px 0",
-                  border: "1px solid #c3e6cb"
-                }}
-              >
-                <strong style={{ color: "#155724" }}>✅ Selected:</strong>{" "}
-                {slotTime} | {docSlots[slotIndex].dayName} |{" "}
-                {docSlots[slotIndex].dateObj.toLocaleDateString()}
-                <br />
-                <strong style={{ color: "#155724" }}>💰 Fee:</strong>{" "}
-                {currency}
-                {docInfo.fees}
+            {/* SELECTED SLOT SUMMARY */}
+            {selectedSlot && (
+              <div className="selected-slot-summary">
+                <div className="summary-icon">✅</div>
+                <div className="summary-details">
+                  <div className="selected-time">{selectedSlot.time}</div>
+                  <div className="selected-date">{docSlots[slotIndex].dayName}</div>
+                  <div className="selected-date-full">{selectedSlot.dateObj.toLocaleDateString('en-GB')}</div>
+                </div>
+                <div className="summary-fee">
+                  {currency}{docInfo.fees}
+                </div>
               </div>
             )}
 
+            {/* BOOK BUTTON */}
             <button
-              className="book"
+              className={`book-appointment-btn ${!selectedSlot ? 'disabled' : ''}`}
               onClick={bookAppointment}
-              disabled={!slotTime}
+              disabled={!selectedSlot || loading}
             >
-              Book Appointment
+              {loading ? (
+                <>
+                  <span className="spinner-small"></span>
+                  Booking...
+                </>
+              ) : (
+                `Book Now - ${currency}${docInfo.fees}`
+              )}
             </button>
-          </div>
+          </>
         )}
       </div>
 
       <RelatedDoctors docId={docId} speciality={docInfo.speciality} />
-    </>
+    </div>
   )
 }
-
 export default PharmacyAppointments

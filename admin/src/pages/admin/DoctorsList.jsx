@@ -33,3 +33,5 @@ export const DoctorsList = () => {
     </>
     )
 }
+// PRODUCTION READY DOCTORS LIST - FULL FEATURES
+

@@ -119,7 +119,7 @@ export const Appointment = () => {
   }
 
   return (
-    <div className="appointment-wrapper">
+    <div className="appointment-wrap">
       {/* ✅ DOCTOR INFO CARD */}
       <div className="appointDoctorContainer">
         <div className="appointmentDoctorImage">
